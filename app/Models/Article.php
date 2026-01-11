@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Article extends Model
+{
+    protected $fillable = [
+        'title',
+        'abstract',
+        'keywords',
+        'pdf_path',
+        'views',
+        'journal_issue_id'
+    ];
+
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function journalIssue()
+    {
+        return $this->belongsTo(JournalIssue::class);
+    }
+}
+
