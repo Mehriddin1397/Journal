@@ -44,17 +44,18 @@
         <div class="container px-0">
             <nav class="navbar navbar-light navbar-expand-xl">
                 <a href="index.html" class="navbar-brand mt-3">
-                    <p class="text-primary display-6 mb-2" style="line-height: 0;">Newsers</p>
-                    <small class="text-body fw-normal" style="letter-spacing: 12px;">Nespaper</small>
+                    <p class="text-primary display-6 mb-2" style="line-height: 0;">IIV MOI</p>
+                    <small class="text-body fw-normal" style="letter-spacing: 12px;">Axborotnomasi</small>
                 </a>
                 <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
                 </button>
                 <div class="collapse navbar-collapse bg-light py-3" id="navbarCollapse">
                     <div class="navbar-nav mx-auto border-top">
-                        <a href="{{route('main')}}" class="nav-item nav-link {{request()->routeIs('main') ? 'active' : ''}}">Home</a>
-                        <a href="{{route('joural')}}" class="nav-item nav-link {{request()->routeIs('joural') ? 'active' : ''}}">Detail  Page</a>
-                        <a href="{{route('contact')}}" class="nav-item nav-link {{request()->routeIs('contact') ? 'active' : ''}}">Contact Us</a>
+                        <a href="{{route('main')}}" class="nav-item nav-link {{request()->routeIs('main') ? 'active' : ''}}">Bosh sahifa</a>
+                        <a href="{{route('new_journal')}}" class="nav-item nav-link {{request()->routeIs('new_journal') ? 'active' : ''}}">Yangi son</a>
+                        <a href="{{route('joural')}}" class="nav-item nav-link {{request()->routeIs('joural') ? 'active' : ''}}">Arxiv</a>
+                        <a href="{{route('contact')}}" class="nav-item nav-link {{request()->routeIs('contact') ? 'active' : ''}}">Bog'lanish</a>
                     </div>
                     <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
                         <div class="d-flex">
@@ -62,7 +63,7 @@
                             <div class="d-flex align-items-center">
 
                                 <div class="d-flex flex-column ms-2" style="width: 150px;">
-                                    <span class="text-body">NEW YORK,</span>
+                                    <span class="text-body">Toshkent,</span>
                                     <small>Mon. 10 jun 2024</small>
                                 </div>
                             </div>

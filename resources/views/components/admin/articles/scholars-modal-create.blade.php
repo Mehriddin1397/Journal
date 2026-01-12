@@ -15,42 +15,52 @@
 
     </div>
     <div class="offcanvas-body">
-        <form action="{{ route('partner.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group mb-4">
-                        <label class="form-label">Nomi(uz):</label>
-                        <input type="text" name="name_uz" class="form-control">
+                        <label class="form-label">Nomi:</label>
+                        <input type="text" name="title" class="form-control">
                     </div>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="form-label"> Qisqa mazmuni:</label>
+                    <textarea name="abstract" rows="10" id="editor4" class="form-control"></textarea>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group mb-4">
-                        <label class="form-label">Nomi(ru):</label>
-                        <input type="text" name="name_ru" class="form-control">
+                        <label class="form-label" for="categories">Maqola muallifi:</label>
+                        <select name="authors[]" class="form-select form-control">
+                            @foreach($authors as $category)
+                                <option value="{{ $category->id }}">{{ $category->full_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="form-group mb-4">
-                        <label class="form-label">Nomi(en):</label>
-                        <input type="text" name="name_en" class="form-control">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label class="form-label">Nomi(kr):</label>
-                        <input type="text" name="name_kr" class="form-control">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label class="form-label">Link:</label>
-                        <input type="text" name="link" class="form-control">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label class="form-label">Rasmi:</label>
-                        <input type="file" name="photo" class="form-control" required>
-                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group mb-4">
                         <label class="form-label" for="categories">Kategoriyalari:</label>
                         <select name="categories[]" class="form-select form-control">
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name_uz }}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label" for="categories">Jurnal soni:</label>
+                        <select name="journal_issue_id" class="form-select form-control">
+                            @foreach($issues as $category)
+                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="form-label">PDF shakli:</label>
+                    <input type="file" name="pdf" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary d-inline-block mt-4">Qo'shish</button>
 

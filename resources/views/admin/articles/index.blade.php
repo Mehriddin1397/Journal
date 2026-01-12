@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Tadqiqotchilar')
+@section('title', 'Maqolalar')
 
 @section('content')
 
@@ -9,11 +9,11 @@
         <div class="page-header position-fixed">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Tadqiqotchilar</h5>
+                    <h5 class="m-b-10">Maqolalar</h5>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                    <li class="breadcrumb-item">Tadqiqotchilar</li>
+                    <li class="breadcrumb-item">Maqolalar</li>
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
@@ -51,38 +51,44 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Photo</th>
                                         <th>Nomi</th>
+                                        <th>Avtor</th>
                                         <th>Kategoriyasi</th>
+                                        <th>Jurnal soni</th>
                                         <th class="text-end">Tahrirlash</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($academia as $index => $academy)
+                                    @foreach($articles as $index => $article)
                                         <tr class="single-item">
                                             <th>{{$index +1 }}</th>
-                                            <td>
-                                                @foreach($academy->photos as $photo)
-                                                    <img src="{{ asset('storage/' . $photo->file_path) }}" alt="" width="20px">
 
+                                            <td>
+                                                {{ $article->title }}
+                                            </td>
+                                            <td>
+                                                @foreach($article->authors as $author)
+                                                {{ $author->full_name }}
                                                 @endforeach
                                             </td>
                                             <td>
-                                                {{ $academy->name_uz }}
+                                                @foreach($article->categories as $author)
+                                                    {{ $author->name }}
+                                                @endforeach
                                             </td>
                                             <td>
-                                                @foreach($academy->categories as $category)
-                                                    {{$category->name_uz}}
-                                                @endforeach
+
+                                                    {{ $article->journalIssue->title }}
+
                                             </td>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
                                                     <a href="javascript:void(0)" data-bs-toggle="offcanvas"
-                                                       data-bs-target="#tasksDetailsOffcanvasEdit{{ $academy->id }}"
+                                                       data-bs-target="#tasksDetailsOffcanvasEdit{{ $article->id }}"
                                                        class="avatar-text avatar-md">
                                                         <i class="feather feather-edit-3"></i>
                                                     </a>
-                                                    <form action="{{ route('scholars.destroy', $academy->id) }}"
+                                                    <form action="{{ route('articles.destroy', $article->id) }}"
                                                           method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -104,9 +110,9 @@
             </div>
         </div>
 
+
     </div>
 
-    @include('components.admin.scholars.scholars-modal-create')
-    @include('components.admin.scholars.scholars-modal-edit', ['academia' => $academia])
-
+    @include('components.admin.articles.scholars-modal-create')
+    @include('components.admin.articles.scholars-modal-edit')
 @endsection

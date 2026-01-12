@@ -37,6 +37,10 @@ class PageController extends Controller
     {
         return view('pages.journal');
     }
+    public function new_journal()
+    {
+        return view('pages.new_journal');
+    }
 
     public function dashboard()
     {
@@ -125,7 +129,7 @@ class PageController extends Controller
                 return view('pages.news', compact('news', 'category', 'id'));
                 break;
 
-            case 'scholars':
+            case 'articles':
                 $news = Scholars::whereHas('categories', function ($query) use ($id) {
                     $query->where('category_id', $id);
                 })->latest()->paginate(9);
@@ -197,7 +201,7 @@ class PageController extends Controller
                 return view('pages.news_show', compact('new', 'category'));
                 break;
 
-            case 'scholars':
+            case 'articles':
                 $new = Scholars::find($id);
 
                 return view('pages.news_show', compact('new', 'category'));

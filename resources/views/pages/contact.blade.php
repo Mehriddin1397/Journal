@@ -16,29 +16,45 @@
                         </div>
                     </div>
                     <div class="col-lg-7">
-                        <form action="" class="mb-4">
-                            <div class="row g-4">
-                                <div class="col-lg-6">
-                                    <input type="text" class="w-100 form-control border-0 py-3" name="name" placeholder="Your Name">
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="email" class="w-100 form-control border-0 py-3" name="email" placeholder="Enter Your Email">
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" class="w-100 form-control border-0 py-3" name="phone" placeholder="Enter Your Phone">
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" class="w-100 form-control border-0 py-3" name="subject" placeholder="Subject">
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="w-100 form-control border-0" rows="6" cols="10" placeholder="Your Message"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="w-100 btn btn-primary form-control py-3" type="submit">Submit Now</button>
-                                </div>
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                <strong>Rahmat!</strong> {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                        </form>
-                        <div class="row g-4">
+                        @endif
+
+                            <form action="{{ route('article-request.store') }}"
+                                  class="mb-4"
+                                  method="POST"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <input type="text" class="w-100 form-control border-0 py-3" name="full_name" placeholder="To‘liq ism familiyangiz" required>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <input type="text" class="w-100 form-control border-0 py-3" name="tel_number" placeholder="Shaxsiy telefon raqamingiz" required>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <input type="file" class="w-100 form-control border-0 py-3" name="pdf_path" required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <textarea class="w-100 form-control border-0" rows="6" cols="10" placeholder="Xabar" name="message"></textarea>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="w-100 btn btn-primary form-control py-3" type="submit">
+                                            Xabarni yuborish
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <div class="row g-4">
                             <div class="col-xl-6">
                                 <div class="d-flex p-4 rounded bg-white">
                                     <i class="fas fa-map-marker-alt fa-2x text-primary me-4"></i>

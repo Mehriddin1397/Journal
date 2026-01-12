@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Hamkorlar')
+@section('title', 'Xabarlar')
 
 @section('content')
 
@@ -9,11 +9,11 @@
         <div class="page-header position-fixed">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Hamkorlar</h5>
+                    <h5 class="m-b-10">Xabarlar</h5>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                    <li class="breadcrumb-item">Hamkorlar</li>
+                    <li class="breadcrumb-item">Xabarlar</li>
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
@@ -24,13 +24,7 @@
                             <span>Back</span>
                         </a>
                     </div>
-                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                        <a href="javascript:void(0);" class="btn btn-primary " data-bs-toggle="offcanvas"
-                           data-bs-target="#tasksDetailsOffcanvas">
-                            <i class="feather-plus me-2"></i>
-                            <span>Yaratish</span>
-                        </a>
-                    </div>
+
                 </div>
                 <div class="d-md-none d-flex align-items-center">
                     <a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -51,49 +45,45 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Photo</th>
-                                        <th>Nomi</th>
-                                        <th>Kategoriyasi</th>
+                                        <th>F.I.Sh</th>
                                         <th class="text-end">Tahrirlash</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($academia as $index => $academy)
-                                        <tr class="single-item">
-                                            <th>{{$index +1 }}</th>
-                                            <td>
-                                                @foreach($academy->photos as $photo)
-                                                    <img src="{{ asset('storage/' . $photo->file_path) }}" alt="" width="20px">
+                                    @foreach($requests as $index => $author)
+                                        <tr class="single-item {{ !$author->is_read ? 'table-warning' : '' }}">
+                                            <th>{{ $index + 1 }}</th>
 
-                                                @endforeach
-                                            </td>
                                             <td>
-                                                {{ $academy->name_uz }}
+                                                {{ $author->full_name }}
+                                                @if(!$author->is_read)
+                                                    <span class="badge bg-danger ms-2">Yangi</span>
+                                                @endif
                                             </td>
-                                            <td>
-                                                @foreach($academy->categories as $category)
-                                                    {{$category->name_uz}}
-                                                @endforeach
-                                            </td>
+
+                                            <td>{{ $author->tel_number }}</td>
+                                            <td>{{ $author->message }}</td>
+
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
-                                                    <a href="javascript:void(0)" data-bs-toggle="offcanvas"
-                                                       data-bs-target="#tasksDetailsOffcanvasEdit{{ $academy->id }}"
+
+                                                    <a href="{{ route('article-requests.read', $author->id) }}"
                                                        class="avatar-text avatar-md">
-                                                        <i class="feather feather-edit-3"></i>
+                                                        <i class="feather feather-eye"></i>
                                                     </a>
-                                                    <form action="{{ route('partner.destroy', $academy->id) }}"
-                                                          method="POST">
+
+                                                    <form action="{{ route('article-requests.destroy', $author->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="avatar-text avatar-md"
-                                                                onclick="return confirm('Rostan uchirasizmi?')">
+                                                                onclick="return confirm('Rostan o‘chirasizmi?')">
                                                             <i class="feather feather-trash-2"></i>
                                                         </button>
                                                     </form>
                                                 </div>
                                             </td>
                                         </tr>
+
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -104,9 +94,8 @@
             </div>
         </div>
 
+
     </div>
 
-    @include('components.admin.partner.partner-modal-create')
-    @include('components.admin.partner.partner-modal-edit', ['academia' => $academia])
 
 @endsection

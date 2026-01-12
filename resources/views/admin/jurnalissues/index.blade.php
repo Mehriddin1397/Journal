@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Rahbariyat')
+@section('title', 'Jurnal soni')
 
 @section('content')
 
@@ -9,11 +9,11 @@
         <div class="page-header position-fixed">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Rahbariyat</h5>
+                    <h5 class="m-b-10">Jurnal soni</h5>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                    <li class="breadcrumb-item">Rahbariyat</li>
+                    <li class="breadcrumb-item">Jurnal soni</li>
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
@@ -51,36 +51,29 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Photo</th>
-                                        <th>Ismi(uz)</th>
-                                        <th>Lavozimi(uz)</th>
+                                        <th>Jurnal soni</th>
                                         <th class="text-end">Tahrirlash</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($academia as $index => $academy)
+                                    @foreach($issues as $index => $author)
                                         <tr class="single-item">
                                             <th>{{$index +1 }}</th>
-                                            <td>
-                                                @foreach($academy->photos as $photo)
-                                                    <img src="{{ asset('storage/' . $photo->file_path) }}" alt="" width="20px">
 
-                                                @endforeach
+                                            <td>
+                                                {{ $author->title }}
                                             </td>
                                             <td>
-                                                {{ $academy->name_uz }}
-                                            </td>
-                                            <td>
-                                                {{$academy->post_uz}}
+                                                shu sonda - {{ $author->articles_count }} ta maqola bor
                                             </td>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
                                                     <a href="javascript:void(0)" data-bs-toggle="offcanvas"
-                                                       data-bs-target="#tasksDetailsOffcanvasEdit{{ $academy->id }}"
+                                                       data-bs-target="#tasksDetailsOffcanvasEdit{{ $author->id }}"
                                                        class="avatar-text avatar-md">
                                                         <i class="feather feather-edit-3"></i>
                                                     </a>
-                                                    <form action="{{ route('rahbariyat.destroy', $academy->id) }}"
+                                                    <form action="{{ route('jurnalissues.destroy', $author->id) }}"
                                                           method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -102,9 +95,9 @@
             </div>
         </div>
 
+
     </div>
 
-    @include('components.admin.rahbariyat.rahbariyat-modal-create')
-    @include('components.admin.rahbariyat.rahbariyat-modal-edit', ['academia' => $academia])
-
+    @include('components.admin.jurnalissues.news-modal-create')
+    @include('components.admin.jurnalissues.news-modal-edit')
 @endsection
