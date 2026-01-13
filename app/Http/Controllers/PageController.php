@@ -25,7 +25,9 @@ class PageController extends Controller
     public function main()
     {
         $one_new = News::latest()->first();
+
         $one_journal = JournalIssues::latest()->first();
+
         $news = News::latest()->skip(1)->take(4)->get();
         return view('pages.main', compact('one_new', 'news', 'one_journal'));
 
@@ -53,7 +55,8 @@ class PageController extends Controller
     {
         $news = News::findOrFail($id);
         $news->increment('views');
-        return view('pages.new_journal', compact('news'));
+        $categories = Category::all();
+        return view('pages.new_show', compact('news', 'categories'));
     }
 
 

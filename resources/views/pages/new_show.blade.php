@@ -1,4 +1,4 @@
-<x-main title="Journals">
+<x-main title="Yangiliklar">
 <!-- Most Populer News Start -->
     <div class="container-fluid populer-news py-5">
         <div class="container py-5">
@@ -6,18 +6,16 @@
                 <div class="row g-4">
                     <div class="col-lg-7 col-xl-8 mt-0">
                         <div class="position-relative overflow-hidden rounded">
-                            <img src="img/news-1.jpg" class="img-fluid rounded img-zoomin w-100" alt="">
+                            <img src="{{ asset('storage/' . $news->image) }}" class="img-fluid rounded img-zoomin w-100" alt="">
                             <div class="d-flex justify-content-center px-4 position-absolute flex-wrap" style="bottom: 10px; left: 0;">
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-clock"></i> 06 minute read</a>
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                <a href="#" class="text-white link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
+                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-clock"></i> {{ $news->created_at->format('Y.m.d') }}</a>
+                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-eye"></i> {{$news->views}}</a>
                             </div>
                         </div>
                         <div class="border-bottom py-3">
-                            <a href="#" class="display-4 text-dark mb-0 link-hover">Lorem Ipsum is simply dummy text of the printing</a>
+                            <a href="#" class="display-4 text-dark mb-0 link-hover">{{$news->title}}</a>
                         </div>
-                        <p class="mt-3 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley standard dummy text ever since the 1500s, when an unknown printer took a galley...
+                        <p class="mt-3 mb-4">{!! $news->text !!}
                         </p>
                     </div>
                     <div class="col-lg-5 col-xl-4">

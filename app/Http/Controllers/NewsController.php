@@ -19,6 +19,7 @@ class NewsController extends Controller
     // Saqlash
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required',
             'text' => 'required',

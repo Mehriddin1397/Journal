@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="border-bottom py-3">
-                    <a href="#" class="display-4 text-dark mb-0 link-hover">{{$one_new->title}}</a>
+                    <a href="{{ route('new.show', $one_new->id) }}" class="display-4 text-dark mb-0 link-hover">{{$one_new->title}}</a>
                 </div>
                 <p class="mt-3 mb-4">{!! $one_new->text!!}
                 </p>

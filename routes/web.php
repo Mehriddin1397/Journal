@@ -10,6 +10,9 @@ Route::get('/joural',[\App\Http\Controllers\PageController::class,'joural'])->na
 Route::get('/new_journal',[\App\Http\Controllers\PageController::class,'new_journal'])->name('new_journal');
 Route::post('/article-request', [ArticleRequestController::class, 'store'])->name('article-request.store');
 
+Route::get('/new/{id}', [\App\Http\Controllers\PageController::class, 'new_show'])->name('new.show');
+
+
 // Admin panel uchun
 
 

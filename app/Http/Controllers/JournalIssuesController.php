@@ -22,11 +22,13 @@ class JournalIssuesController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required',
-            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'pdf_path' => 'required|mimes:pdf|max:5120',
+            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:5048',
+            'pdf_path' => 'required|mimes:pdf|max:50120',
         ]);
+
 
         $photoPath = $request->file('photo')->store('journal_photos', 'public');
         $pdfPath = $request->file('pdf_path')->store('journal_pdfs', 'public');

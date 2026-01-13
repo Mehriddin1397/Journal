@@ -1,4 +1,4 @@
-<x-main title="Journals">
+<x-main title="Yangiliklar">
     <!-- Most Populer News Start -->
     <div class="container-fluid populer-news py-5">
         <div class="container py-5">
@@ -17,7 +17,7 @@
                                     <div class="row g-4 align-items-center">
                                         <div class="col-5">
                                             <div class="overflow-hidden rounded">
-                                                <img src="img/news-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
+                                                <img src="{{asset('img/news-4.jpg')}}" class="img-zoomin img-fluid rounded w-100" alt="">
                                             </div>
                                         </div>
                                         <div class="col-7">
