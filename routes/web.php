@@ -29,6 +29,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
     Route::resource('jurnalissues', \App\Http\Controllers\JournalIssueController::class);
     Route::resource('articles', \App\Http\Controllers\ArticleController::class);
+    Route::resource('journal_issues', \App\Http\Controllers\JournalIssuesController::class);
+
 
 
     Route::get('/admin/article-requests', [ArticleRequestController::class, 'index'])->name('article-requests.index');

@@ -19,6 +19,12 @@
                     </a>
                 </li>
                 <li class="nxl-item nxl-hasmenu">
+                    <a href="{{route('journal_issues.index')}}" class="nxl-link">
+                        <span class="nxl-micon"><i class="feather-layout"></i></span>
+                        <span class="nxl-mtext">Jurnal sonlari</span><span class="nxl-arrow"></span>
+                    </a>
+                </li>
+                <li class="nxl-item nxl-hasmenu">
                     <a href="{{route('news.index')}}" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-layout"></i></span>
                         <span class="nxl-mtext">Yangiliklar</span><span class="nxl-arrow"></span>
@@ -39,7 +45,7 @@
                 <li class="nxl-item nxl-hasmenu">
                     <a href="{{route('jurnalissues.index')}}" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-layout"></i></span>
-                        <span class="nxl-mtext">Jurnal soni</span><span class="nxl-arrow"></span>
+                        <span class="nxl-mtext">Jurnal raqami</span><span class="nxl-arrow"></span>
                     </a>
                 </li>
                 <li class="nxl-item nxl-hasmenu">

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Xabarlar')
+@section('title', 'Jurnal sonlari')
 
 @section('content')
 
@@ -9,11 +9,11 @@
         <div class="page-header position-fixed">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Xabarlar</h5>
+                    <h5 class="m-b-10">Jurnal sonlari</h5>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                    <li class="breadcrumb-item">Xabarlar</li>
+                    <li class="breadcrumb-item">Jurnal sonlari</li>
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
@@ -24,7 +24,13 @@
                             <span>Back</span>
                         </a>
                     </div>
-
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <a href="javascript:void(0);" class="btn btn-primary " data-bs-toggle="offcanvas"
+                           data-bs-target="#tasksDetailsOffcanvas">
+                            <i class="feather-plus me-2"></i>
+                            <span>Yaratish</span>
+                        </a>
+                    </div>
                 </div>
                 <div class="d-md-none d-flex align-items-center">
                     <a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -45,48 +51,41 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>F.I.Sh</th>
+                                        <th>Rasmi</th>
+                                        <th>Nomi</th>
                                         <th class="text-end">Tahrirlash</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($requests as $index => $author)
-                                        <tr class="single-item {{ !$author->is_read ? 'table-warning' : '' }}">
-                                            <th>{{ $index + 1 }}</th>
+                                    @foreach($issues as $index => $author)
+                                        <tr class="single-item">
+                                            <th>{{$index +1 }}</th>
 
                                             <td>
-                                                <a href="{{ asset('storage/' . $author->pdf_path) }}" download>
-                                                    {{ $author->full_name }}
-                                                </a>
-
-                                                @if(!$author->is_read)
-                                                    <span class="badge bg-danger ms-2">Yangi</span>
-                                                @endif
+                                                <img src="{{ asset('storage/' . $author->photo) }}" alt="" width="40px">
                                             </td>
-
-                                            <td>{{ $author->tel_number }}</td>
-                                            <td>{{ $author->message }}</td>
-
+                                            <td>
+                                                {{ $author->title }}
+                                            </td>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
-
-                                                    <a href="{{ route('article-requests.read', $author->id) }}"
+                                                    <a href="javascript:void(0)" data-bs-toggle="offcanvas"
+                                                       data-bs-target="#tasksDetailsOffcanvasEdit{{ $author->id }}"
                                                        class="avatar-text avatar-md">
-                                                        <i class="feather feather-eye"></i>
+                                                        <i class="feather feather-edit-3"></i>
                                                     </a>
-
-                                                    <form action="{{ route('article-requests.destroy', $author->id) }}" method="POST">
+                                                    <form action="{{ route('journal_issues.destroy', $author->id) }}"
+                                                          method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="avatar-text avatar-md"
-                                                                onclick="return confirm('Rostan o‘chirasizmi?')">
+                                                                onclick="return confirm('Rostan uchirasizmi?')">
                                                             <i class="feather feather-trash-2"></i>
                                                         </button>
                                                     </form>
                                                 </div>
                                             </td>
                                         </tr>
-
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -100,5 +99,6 @@
 
     </div>
 
-
+    @include('components.admin.journalissues.news-modal-create')
+    @include('components.admin.journalissues.news-modal-edit')
 @endsection

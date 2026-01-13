@@ -40,12 +40,7 @@ class NewsController extends Controller
     }
 
     // Yangilikni ko'rish
-    public function show($id)
-    {
-        $news = News::findOrFail($id);
-        $news->increment('views');
-        return view('news.show', compact('news'));
-    }
+
 
     // Yangilikni tahrirlash formasi
     public function edit($id)

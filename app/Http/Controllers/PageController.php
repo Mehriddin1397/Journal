@@ -11,6 +11,7 @@ use App\Models\Crimes;
 use App\Models\Expertise;
 use App\Models\Institut;
 use App\Models\Journal;
+use App\Models\JournalIssues;
 use App\Models\News;
 use App\Models\Partner;
 use App\Models\Rahbariyat;
@@ -23,9 +24,10 @@ class PageController extends Controller
 
     public function main()
     {
-
-
-        return view('pages.main');
+        $one_new = News::latest()->first();
+        $one_journal = JournalIssues::latest()->first();
+        $news = News::latest()->skip(1)->take(4)->get();
+        return view('pages.main', compact('one_new', 'news', 'one_journal'));
 
     }
 
@@ -35,7 +37,7 @@ class PageController extends Controller
     }
     public function joural()
     {
-        return view('pages.journal');
+        return view('pages.article_show');
     }
     public function new_journal()
     {
@@ -46,6 +48,20 @@ class PageController extends Controller
     {
         return view('admin.dashboard');
     }
+
+    public function new_show($id)
+    {
+        $news = News::findOrFail($id);
+        $news->increment('views');
+        return view('pages.new_journal', compact('news'));
+    }
+
+
+
+
+
+
+
 
     public function test(Request $request)
     {
@@ -65,224 +81,11 @@ class PageController extends Controller
 
 
     //1-guruh(junallar,kitobxonlik, tadqiqotlar,ilmiy kengash, maqola)
-    public function categoryId($id)
-    {
-        $category = Category::find($id);
-
-        switch ($category->object_type) {
-
-            case 'research':
-                $categories = Category::forObjectType('research');
-
-                $researchs = Research::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->get();
-
-                return view('pages.researchsCategory', compact('researchs', 'categories', 'category', 'id'));
-                break;
-
-            case 'bibliophilia':
-                $categories = Category::forObjectType('bibliophilia');
-
-                $researchs = Bibliophilia::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->get();
-
-                return view('pages.researchsCategory', compact('researchs', 'categories', 'category', 'id'));
-                break;
-
-            case 'crimes':
-                $categories = Category::forObjectType('crimes');
-
-                $news = Crimes::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->paginate(9);
-
-                return view('pages.news', compact('news', 'categories', 'category', 'id'));
-                break;
-
-            case 'jurnal':
-                $categories = Category::forObjectType('jurnal');
-
-                $researchs = Journal::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->latest()->get();
-
-                return view('pages.researchsCategory', compact('researchs', 'categories', 'category', 'id'));
-                break;
-
-            case 'articles':
-                $categories = Category::forObjectType('articles');
-
-                $researchs = Articles::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->get();
-
-                return view('pages.researchsCategory', compact('researchs', 'categories', 'category', 'id'));
-                break;
-
-            case 'news':
-                $news = News::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->latest()->paginate(9);
-
-                return view('pages.news', compact('news', 'category', 'id'));
-                break;
-
-            case 'articles':
-                $news = Scholars::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->latest()->paginate(9);
-
-                return view('pages.news', compact('news', 'category', 'id'));
-                break;
-            case 'expertise':
-                $news = Expertise::whereHas('categories', function ($query) use ($id) {
-                    $query->where('category_id', $id);
-                })->latest()->paginate(9);
-
-                return view('pages.news', compact('news', 'category', 'id'));
-                break;
-
-        }
 
 
-    }
-
-    public function show(Request $request)
-    {
-        $category_id = $request->input('category_id');
-        $id = $request->input('id');
 
 
-        $category = Category::find($category_id);
 
-        switch ($category->object_type) {
-
-            case 'research':
-                $research = Research::find($id);
-
-                return view('pages.crimes', compact('research', 'category'));
-                break;
-
-            case 'bibliophilia':
-                $research = Bibliophilia::find($id);
-
-                return view('pages.crimes', compact('research', 'category'));
-                break;
-
-
-            case 'crimes':
-                $new = Crimes::find($id);
-
-                return view('pages.news_show', compact('new', 'category'));
-                break;
-
-            case 'jurnal':
-                $research = Journal::find($id);
-
-                return view('pages.crimes', compact('research', 'category'));
-                break;
-
-            case 'articles':
-                $research = Articles::find($id);
-
-                return view('pages.crimes', compact('research', 'category'));
-                break;
-            case 'academia':
-                $research = Academia::find($id);
-
-                return view('pages.crimes', compact('research', 'category'));
-                break;
-
-            case 'news':
-                $new = News::find($id);
-
-                return view('pages.news_show', compact('new', 'category'));
-                break;
-
-            case 'articles':
-                $new = Scholars::find($id);
-
-                return view('pages.news_show', compact('new', 'category'));
-                break;
-
-            case 'expertise':
-                $new = Expertise::find($id);
-
-                return view('pages.news_show', compact('new', 'category'));
-                break;
-
-        }
-    }
-
-    public function boss()
-    {
-        $boss = Rahbariyat::all();
-
-        return view('pages.boshliq', compact('boss'));
-
-    }
-
-    public function search(Request $request)
-    {
-        $q = $request->input('query');
-
-        $academias = Academia::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $articles = Articles::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $crimes = Crimes::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $journals = Journal::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $news = News::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $bibliophilias = Bibliophilia::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $rahbariyats = Rahbariyat::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $researchs = Research::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-        $scholars = Scholars::where('name_uz', 'like', "%$q%")
-            ->orWhere('name_ru', 'like', "%$q%")
-            ->orWhere('name_en', 'like', "%$q%")
-            ->orWhere('name_kr', 'like', "%$q%")
-            ->get();
-
-
-        return view('pages.search', compact('articles', 'scholars', 'researchs',
-            'rahbariyats', 'bibliophilias', 'news', 'journals', 'crimes', 'academias', 'q'));
-    }
-
-    public function hujjat()
-    {
-        return view('pages.ins_nor_hujjat');
-    }
 
 
 }
