@@ -11,6 +11,11 @@ Route::get('/new_journal',[\App\Http\Controllers\PageController::class,'new_jour
 Route::post('/article-request', [ArticleRequestController::class, 'store'])->name('article-request.store');
 
 Route::get('/new/{id}', [\App\Http\Controllers\PageController::class, 'new_show'])->name('new.show');
+Route::get('/journal/{id}', [\App\Http\Controllers\PageController::class, 'journal_show'])->name('journal.show');
+Route::get('/category/{name}', [\App\Http\Controllers\PageController::class, 'category_show'])->name('category_show');
+Route::get('/author/{name}', [\App\Http\Controllers\PageController::class, 'author_show'])->name('author_show');
+Route::get('/Journal/{name}', [\App\Http\Controllers\PageController::class, 'journals_show'])->name('journal_show');
+
 
 
 // Admin panel uchun

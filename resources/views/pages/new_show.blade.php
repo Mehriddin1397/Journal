@@ -20,42 +20,25 @@
                     </div>
                     <div class="col-lg-5 col-xl-4">
 
-                            <div class="row g-4">
-                                <div class="col-12">
-                                    <div class="p-3 rounded border">
-                                        <h4 class="mb-4">Stay Connected</h4>
-                                        <div class="row g-4">
-                                            <div class="col-12">
-                                                <a href="#" class="w-100 rounded btn btn-primary d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-facebook-f btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">13,977 Fans</span>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="p-3 rounded border">
+                                    <h4 class="mb-4">Kategoriyalar</h4>
+                                    <div class="row g-4">
+                                        <div class="col-12">
+                                            @foreach($categories as $category)
+                                                <a href="{{ route('category_show', $category->name) }}" class="w-100 rounded btn btn-{{$category->slug}} d-flex align-items-center p-3 mb-2">
+                                                    <i class="fas fa-book d-flex align-items-center justify-content-center bg-light rounded-circle shadow-sm me-3"
+                                                       style="width:45px;height:45px;"></i>
+                                                    <span class="text-white">{{$category->name}}</span>
                                                 </a>
-                                                <a href="#" class="w-100 rounded btn btn-danger d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-twitter btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">21,798 Follower</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-youtube btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">7,999 Subscriber</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-dark d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-instagram btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">19,764 Follower</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-secondary d-flex align-items-center p-3 mb-2">
-                                                    <i class="bi-cloud btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">31,999 Subscriber</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-4">
-                                                    <i class="fab fa-dribbble btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">37,999 Subscriber</span>
-                                                </a>
-                                            </div>
+                                            @endforeach
                                         </div>
-
                                     </div>
+
                                 </div>
                             </div>
+                        </div>
 
                     </div>
                 </div>

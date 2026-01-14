@@ -12,7 +12,8 @@ class Article extends Model
         'keywords',
         'pdf_path',
         'views',
-        'journal_issue_id'
+        'journal_issue_id',
+        'photo'
     ];
 
     public function authors()

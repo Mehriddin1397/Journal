@@ -61,7 +61,7 @@
                                             <th>{{$index +1 }}</th>
 
                                             <td>
-                                                {{ $author->full_name }}
+                                                {{ $author->name }}
                                             </td>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">

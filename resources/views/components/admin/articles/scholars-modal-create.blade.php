@@ -33,7 +33,7 @@
                         <label class="form-label" for="categories">Maqola muallifi:</label>
                         <select name="authors[]" class="form-select form-control">
                             @foreach($authors as $category)
-                                <option value="{{ $category->id }}">{{ $category->full_name }}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -61,6 +61,12 @@
                 <div class="form-group mb-4">
                     <label class="form-label">PDF shakli:</label>
                     <input type="file" name="pdf" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">Rasmi:</label>
+                        <input type="file" name="photo" class="form-control" multiple required>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary d-inline-block mt-4">Qo'shish</button>
 

@@ -22,7 +22,7 @@ class AuthorController extends Controller
         ]);
 
         Author::create([
-            'full_name' => $request->full_name
+            'name' => $request->full_name
         ]);
 
         return back();
@@ -36,7 +36,7 @@ class AuthorController extends Controller
         ]);
 
         $data = [
-            'full_name' => $request->full_name,
+            'name' => $request->full_name,
         ];
 
 

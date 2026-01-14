@@ -51,6 +51,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Photo</th>
                                         <th>Nomi</th>
                                         <th>Avtor</th>
                                         <th>Kategoriyasi</th>
@@ -62,7 +63,9 @@
                                     @foreach($articles as $index => $article)
                                         <tr class="single-item">
                                             <th>{{$index +1 }}</th>
-
+                                            <td>
+                                                <img src="{{ asset('storage/' . $article->photo) }}" alt="" width="40px">
+                                            </td>
                                             <td>
                                                 {{ $article->title }}
                                             </td>

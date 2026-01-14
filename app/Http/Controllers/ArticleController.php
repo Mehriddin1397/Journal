@@ -8,6 +8,7 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\JournalIssue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -31,9 +32,10 @@ class ArticleController extends Controller
             'pdf' => 'required|mimes:pdf',
             'authors' => 'required|array',
             'categories' => 'required|array',
-            'journal_issue_id' => 'nullable|exists:journal_issues,id'
+            'journal_issue_id' => 'nullable|exists:journal_issues,id',
+            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:5048',
         ]);
-
+        $photoPath = $request->file('photo')->store('journal_photos', 'public');
         $pdfPath = $request->file('pdf')->store('articles', 'public');
 
         $article = Article::create([
@@ -41,6 +43,7 @@ class ArticleController extends Controller
             'abstract' => $request->abstract,
             'keywords' => $request->keywords,
             'pdf_path' => $pdfPath,
+            'photo' => $photoPath,
             'journal_issue_id' => $request->journal_issue_id
         ]);
 
@@ -60,7 +63,8 @@ class ArticleController extends Controller
             'pdf' => 'nullable|mimes:pdf',
             'authors' => 'required|array',
             'categories' => 'required|array',
-            'journal_issue_id' => 'nullable|exists:journal_issues,id'
+            'journal_issue_id' => 'nullable|exists:journal_issues,id',
+            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:5048',
         ]);
 
         $data = [
@@ -74,6 +78,14 @@ class ArticleController extends Controller
         if ($request->hasFile('pdf')) {
             $pdfPath = $request->file('pdf')->store('articles', 'public');
             $data['pdf_path'] = $pdfPath;
+        }
+        // Agar yangi rasm yuklansa
+        if ($request->hasFile('photo')) {
+            // eski rasmni o‘chiramiz
+            Storage::disk('public')->delete($article->photo);
+
+            $photoPath = $request->file('photo')->store('journal_photos', 'public');
+            $data['photo'] = $photoPath;
         }
 
         $article->update($data);
@@ -97,6 +109,9 @@ class ArticleController extends Controller
         // PDF o‘chirish (ixtiyoriy, lekin tavsiya qilaman)
         if ($article->pdf_path && Storage::disk('public')->exists($article->pdf_path)) {
             Storage::disk('public')->delete($article->pdf_path);
+        }
+        if ($article->photo && Storage::disk('public')->exists($article->photo)) {
+            Storage::disk('public')->delete($article->photo);
         }
 
         $article->delete();

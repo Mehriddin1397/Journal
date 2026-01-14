@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('abstract');
             $table->string('keywords')->nullable();
             $table->string('pdf_path');
+            $table->string('photo');
             $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });

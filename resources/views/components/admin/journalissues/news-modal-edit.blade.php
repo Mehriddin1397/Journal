@@ -36,7 +36,7 @@
                     <div class="col-md-6">
                         <div class="form-group mb-4">
                             <label class="form-label">Rasmi:</label>
-                            <input type="file" name="image" class="form-control" multiple >
+                            <input type="file" name="photo" class="form-control" multiple >
                         </div>
                     </div>
                     <div class="col-md-6">

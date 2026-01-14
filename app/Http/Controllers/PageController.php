@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Academia;
 use App\Models\Articles;
+use App\Models\Author;
 use App\Models\Bibliophilia;
 use App\Models\Category;
 use App\Models\Contact;
@@ -11,6 +12,7 @@ use App\Models\Crimes;
 use App\Models\Expertise;
 use App\Models\Institut;
 use App\Models\Journal;
+use App\Models\JournalIssue;
 use App\Models\JournalIssues;
 use App\Models\News;
 use App\Models\Partner;
@@ -57,6 +59,37 @@ class PageController extends Controller
         $news->increment('views');
         $categories = Category::all();
         return view('pages.new_show', compact('news', 'categories'));
+    }
+    public function journal_show($id)
+    {
+        $news = JournalIssues::findOrFail($id);
+        $categories = Category::all();
+        return view('pages.journal_show', compact('news', 'categories'));
+    }
+
+    public function category_show($name)
+    {
+        $category = Category::where('name', $name)->firstOrFail();
+        $categories = Category::all();
+        $articles = $category->articles()->latest()->get();
+
+        return view('pages.category_show', compact('category', 'articles', 'categories'));
+    }
+    public function author_show($name)
+    {
+        $category = Author::where('name', $name)->firstOrFail();
+        $categories = Category::all();
+        $articles = $category->articles()->latest()->get();
+
+        return view('pages.category_show', compact('category', 'articles', 'categories'));
+    }
+    public function journals_show($name)
+    {
+        $category = JournalIssue::where('title', $name)->firstOrFail();
+        $categories = Category::all();
+        $articles = $category->articles()->latest()->get();
+
+        return view('pages.jurnal_soni_show', compact('category', 'articles', 'categories'));
     }
 
 

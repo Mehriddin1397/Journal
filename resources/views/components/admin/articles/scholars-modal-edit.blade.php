@@ -37,7 +37,7 @@
                             <select name="authors[]" class="form-select form-control">
                                 @foreach($authors as $category)
                                     <option value="{{ $category->id }}"
-                                            @if($article->authors->contains($category->id)) selected @endif>{{ $category->full_name }}</option>
+                                            @if($article->authors->contains($category->id)) selected @endif>{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -62,6 +62,18 @@
                                             >{{ $category->title }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    @if($article->photo)
+                        <!-- Munosabat mavjudligini tekshirish -->
+                        <!-- Munosabatni chaqirish va kolleksiyani aylanish -->
+                        <img src="{{ asset('storage/' . $article->photo) }}" alt="Question Image"
+                             class="img-fluid mt-2" width="150">
+                    @endif
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">Rasmi:</label>
+                            <input type="file" name="photo" class="form-control" multiple >
                         </div>
                     </div>
                     <div class="form-group mb-4">

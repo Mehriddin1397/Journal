@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group mb-4">
                             <label class="form-label">Nomi(uz):</label>
-                            <input type="text" name="full_name" value="{{old('full_name',$author->full_name)}}" class="form-control">
+                            <input type="text" name="full_name" value="{{old('full_name',$author->name)}}" class="form-control">
                         </div>
                     </div>
 
