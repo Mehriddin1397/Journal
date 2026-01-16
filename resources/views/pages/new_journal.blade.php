@@ -12,23 +12,38 @@
                             <div class="border-bottom mb-4">
                                 <h1 class="mb-4">Jurnal tuliq sahifalari</h1>
                             </div>
-                            <div class="row g-4">
-                                <div class="col-12">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-5">
-                                            <div class="overflow-hidden rounded">
-                                                <img src="{{asset('img/news-4.jpg')}}" class="img-zoomin img-fluid rounded w-100" alt="">
+
+                            <div class="row g-4 mt-3">
+                                @foreach($latestIssueArticles as $article)
+                                    <div class="col-md-4">
+                                        <div class="article-card">
+                                            <div class="article-img">
+                                                <img src="{{ asset('storage/' . $article->photo) }}" alt="Article image">
                                             </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="features-content d-flex flex-column">
-                                                <a href="#" class="h6">Institut haqida qisqacha ma'lumot</a>
-                                                <small><i class="fa fa-clock"> 06 minute read</i> </small>
-                                                <small><i class="fa fa-eye"> 3.5k Views</i></small>
+
+                                            <div class="article-body">
+                                                <h5 class="article-title">
+                                                    {{$article->title}}
+                                                </h5>
+
+                                                <p class="article-author">
+                                                    @foreach($article->authors as $author)
+                                                        ✍ Muallif: <span><a href="{{ route('author_show', $author->name) }}">{{$author->name}}</a></span>
+                                                    @endforeach
+                                                </p>
+                                                <p class="article-author">
+
+                                                    Jurnal soni: <span><a href="{{ route('journal_show', $article->journalIssue->title) }}">{{$article->journalIssue->title}}</a></span>
+
+                                                </p>
+
+                                                <a href="{{ route('maqola_show', $article->id) }}" class="article-link">
+                                                    Batafsil o‘qish →
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -36,142 +51,50 @@
                         <div class="row g-4">
                             <div class="col-12">
                                 <div class="p-3 rounded border">
-                                    <h4 class="mb-4">Stay Connected</h4>
+                                    <h4 class="mb-4">Kategoriyalar</h4>
                                     <div class="row g-4">
                                         <div class="col-12">
-                                            <a href="#" class="w-100 rounded btn btn-primary d-flex align-items-center p-3 mb-2">
-                                                <i class="fab fa-facebook-f btn btn-light btn-square rounded-circle me-3"></i>
-                                                <span class="text-white">13,977 Fans</span>
-                                            </a>
-                                            <a href="#" class="w-100 rounded btn btn-danger d-flex align-items-center p-3 mb-2">
-                                                <i class="fab fa-twitter btn btn-light btn-square rounded-circle me-3"></i>
-                                                <span class="text-white">21,798 Follower</span>
-                                            </a>
-                                            <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-2">
-                                                <i class="fab fa-youtube btn btn-light btn-square rounded-circle me-3"></i>
-                                                <span class="text-white">7,999 Subscriber</span>
-                                            </a>
-                                            <a href="#" class="w-100 rounded btn btn-dark d-flex align-items-center p-3 mb-2">
-                                                <i class="fab fa-instagram btn btn-light btn-square rounded-circle me-3"></i>
-                                                <span class="text-white">19,764 Follower</span>
-                                            </a>
-                                            <a href="#" class="w-100 rounded btn btn-secondary d-flex align-items-center p-3 mb-2">
-                                                <i class="bi-cloud btn btn-light btn-square rounded-circle me-3"></i>
-                                                <span class="text-white">31,999 Subscriber</span>
-                                            </a>
-                                            <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-4">
-                                                <i class="fab fa-dribbble btn btn-light btn-square rounded-circle me-3"></i>
-                                                <span class="text-white">37,999 Subscriber</span>
-                                            </a>
+                                            @foreach($categories as $category)
+                                                <a href="{{ route('category_show', $category->name) }}"
+                                                   class="w-100 rounded btn btn-{{$category->slug}} d-flex align-items-center p-3 mb-2">
+                                                    <i class="fas fa-book d-flex align-items-center justify-content-center bg-light rounded-circle shadow-sm me-3"
+                                                       style="width:45px;height:45px;"></i>
+                                                    <span class="text-white">{{$category->name}}</span>
+                                                </a>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <h4 class="my-4">Eng kup kurilgan maqolalar</h4>
+
                                     <div class="row g-4">
+
+                                        @foreach($popularArticles as $article)
                                         <div class="col-12">
                                             <div class="row g-4 align-items-center features-item">
                                                 <div class="col-4">
                                                     <div class="rounded-circle position-relative">
                                                         <div class="overflow-hidden rounded-circle">
-                                                            <img src="img/features-sports-1.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+                                                            <img src="{{ asset('storage/' . $article->photo) }}" class="img-zoomin img-fluid rounded-circle w-100" alt="">
                                                         </div>
-                                                        <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-8">
                                                     <div class="features-content d-flex flex-column">
-                                                        <p class="text-uppercase mb-2">Mehriddin Soyibov</p>
+                                                        @foreach($article->authors as $author)
+                                                        <p class="text-uppercase mb-2">{{$author->name}}</p>
+                                                        @endforeach
                                                         <a href="#" class="h6">
-                                                            Maqola nomi
+                                                            {{$article->title}}
                                                         </a>
-                                                        <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
+                                                        <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i>
+                                                            {{$article->created_at->format('Y.m.d')}}</small>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="row g-4 align-items-center features-item">
-                                                <div class="col-4">
-                                                    <div class="rounded-circle position-relative">
-                                                        <div class="overflow-hidden rounded-circle">
-                                                            <img src="img/features-technology.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                        </div>
-                                                        <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <div class="features-content d-flex flex-column">
-                                                        <p class="text-uppercase mb-2">Technology</p>
-                                                        <a href="#" class="h6">
-                                                            Get the best speak market, news.
-                                                        </a>
-                                                        <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="row g-4 align-items-center features-item">
-                                                <div class="col-4">
-                                                    <div class="rounded-circle position-relative">
-                                                        <div class="overflow-hidden rounded-circle">
-                                                            <img src="img/features-fashion.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                        </div>
-                                                        <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <div class="features-content d-flex flex-column">
-                                                        <p class="text-uppercase mb-2">Fashion</p>
-                                                        <a href="#" class="h6">
-                                                            Get the best speak market, news.
-                                                        </a>
-                                                        <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="row g-4 align-items-center features-item">
-                                                <div class="col-4">
-                                                    <div class="rounded-circle position-relative">
-                                                        <div class="overflow-hidden rounded-circle">
-                                                            <img src="img/features-life-style.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                        </div>
-                                                        <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <div class="features-content d-flex flex-column">
-                                                        <p class="text-uppercase mb-2">Life Style</p>
-                                                        <a href="#" class="h6">
-                                                            Get the best speak market, news.
-                                                        </a>
-                                                        <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="row g-4 align-items-center features-item">
-                                                <div class="col-4">
-                                                    <div class="rounded-circle position-relative">
-                                                        <div class="overflow-hidden rounded-circle">
-                                                            <img src="img/features-life-style.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                        </div>
-                                                        <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <div class="features-content d-flex flex-column">
-                                                        <p class="text-uppercase mb-2">Life Style</p>
-                                                        <a href="#" class="h6">
-                                                            Get the best speak market, news.
-                                                        </a>
-                                                        <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
+
+
 
 
                                     </div>
@@ -183,5 +106,74 @@
             </div>
         </div>
     </div>
+    <style>
+        .article-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-img {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .article-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* MUHIM: rasmni buzmaydi */
+        }
+
+        .article-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .article-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #222;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            word-break: break-word; /* uzun title tushib ketadi */
+        }
+
+        .article-author {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .article-author span {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .article-link {
+            margin-top: auto;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0d6efd;
+            text-decoration: none;
+        }
+
+        .article-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
     <!-- Most Populer News End -->
 </x-main>

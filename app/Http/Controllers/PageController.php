@@ -2,23 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Academia;
-use App\Models\Articles;
+use App\Models\Article;
 use App\Models\Author;
-use App\Models\Bibliophilia;
 use App\Models\Category;
-use App\Models\Contact;
-use App\Models\Crimes;
-use App\Models\Expertise;
-use App\Models\Institut;
-use App\Models\Journal;
+
 use App\Models\JournalIssue;
 use App\Models\JournalIssues;
 use App\Models\News;
-use App\Models\Partner;
-use App\Models\Rahbariyat;
-use App\Models\Research;
-use App\Models\Scholars;
+
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -31,7 +22,8 @@ class PageController extends Controller
         $one_journal = JournalIssues::latest()->first();
 
         $news = News::latest()->skip(1)->take(4)->get();
-        return view('pages.main', compact('one_new', 'news', 'one_journal'));
+        $categories = Category::all();
+        return view('pages.main', compact('one_new', 'news', 'one_journal', 'categories'));
 
     }
 
@@ -41,11 +33,31 @@ class PageController extends Controller
     }
     public function joural()
     {
-        return view('pages.article_show');
+        $categories = Category::all();
+        $journals = JournalIssues::all();
+        return view('pages.article_show', compact('categories', 'journals'));
     }
     public function new_journal()
     {
-        return view('pages.new_journal');
+        $categories = Category::all();
+        // 1️⃣ Eng oxirgi jurnal soni
+
+        $latestjurnal = JournalIssue::latest()->first();
+
+        // 2️⃣ Shu songa tegishli articlelar
+        $latestIssueArticles = [];
+
+        if ($latestjurnal) {
+            $latestIssueArticles = $latestjurnal->articles()->latest()->get();
+        }
+
+        // 3️⃣ Eng ko‘p ko‘rilgan 5 ta article
+        $popularArticles = Article::orderByDesc('views')
+            ->take(5)
+            ->get();
+
+
+        return view('pages.new_journal', compact('categories',  'latestIssueArticles', 'popularArticles'));
     }
 
     public function dashboard()
@@ -93,27 +105,25 @@ class PageController extends Controller
     }
 
 
-
-
-
-
-
-
-    public function test(Request $request)
+    public function article_show($id)
     {
-        $category_id = $request->input('category_id');
-        $id = $request->input('id');
-        $category = Category::find($category_id);
-
-        switch ($category->object_type) {
-
-            case 'institut':
-                $institut = Institut::find($id);
-
-                return view('pages.texts', compact('institut', 'category'));
-                break;
-        }
+        $news = Article::findOrFail($id);
+        $news->increment('views');
+        $categories = Category::all();
+        $popularArticles = Article::orderByDesc('views')
+            ->take(5)
+            ->get();
+        return view('pages.maqola_show', compact('news', 'categories', 'popularArticles'));
     }
+
+
+
+
+
+
+
+
+
 
 
     //1-guruh(junallar,kitobxonlik, tadqiqotlar,ilmiy kengash, maqola)

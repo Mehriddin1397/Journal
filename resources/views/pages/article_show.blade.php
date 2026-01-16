@@ -1,67 +1,136 @@
-<x-main title="Journals">
-<!-- Most Populer News Start -->
+<x-main title="Yangiliklar Category_show">
+    <!-- Most Populer News Start -->
     <div class="container-fluid populer-news py-5">
         <div class="container py-5">
             <div class="tab-class mb-4">
                 <div class="row g-4">
                     <div class="col-lg-7 col-xl-8 mt-0">
                         <div class="position-relative overflow-hidden rounded">
-                            <img src="img/news-1.jpg" class="img-fluid rounded img-zoomin w-100" alt="">
-                            <div class="d-flex justify-content-center px-4 position-absolute flex-wrap" style="bottom: 10px; left: 0;">
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-clock"></i> 06 minute read</a>
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                <a href="#" class="text-white link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                            </div>
+
                         </div>
                         <div class="border-bottom py-3">
-                            <a href="#" class="display-4 text-dark mb-0 link-hover">Lorem Ipsum is simply dummy text of the printing</a>
+                            <a href="#" class="display-4 text-dark mb-0 link-hover">Jurnalni barcha sonlari</a>
                         </div>
-                        <p class="mt-3 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley standard dummy text ever since the 1500s, when an unknown printer took a galley...
-                        </p>
+
+                        <div class="row g-4 mt-3">
+                            @foreach($journals as $article)
+                                <div class="col-md-4">
+                                    <div class="article-card">
+                                        <div class="article-img">
+                                            <img src="{{ asset('storage/' . $article->photo) }}" alt="Article image">
+                                        </div>
+
+                                        <div class="article-body">
+                                            <h5 class="article-title">
+                                                {{$article->title}}
+                                            </h5>
+
+                                            <a href="{{route('journal.show', $article->id)}}" class="article-link">
+                                                Batafsil o‘qish →
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+
                     </div>
                     <div class="col-lg-5 col-xl-4">
 
-                            <div class="row g-4">
-                                <div class="col-12">
-                                    <div class="p-3 rounded border">
-                                        <h4 class="mb-4">Stay Connected</h4>
-                                        <div class="row g-4">
-                                            <div class="col-12">
-                                                <a href="#" class="w-100 rounded btn btn-primary d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-facebook-f btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">13,977 Fans</span>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="p-3 rounded border">
+                                    <h4 class="mb-4">Kategoriyalar</h4>
+                                    <div class="row g-4">
+                                        <div class="col-12">
+                                            @foreach($categories as $category)
+                                                <a href="{{ route('category_show', $category->name) }}"
+                                                   class="w-100 rounded btn btn-{{$category->slug}} d-flex align-items-center p-3 mb-2">
+                                                    <i class="fas fa-book d-flex align-items-center justify-content-center bg-light rounded-circle shadow-sm me-3"
+                                                       style="width:45px;height:45px;"></i>
+                                                    <span class="text-white">{{$category->name}}</span>
                                                 </a>
-                                                <a href="#" class="w-100 rounded btn btn-danger d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-twitter btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">21,798 Follower</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-youtube btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">7,999 Subscriber</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-dark d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-instagram btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">19,764 Follower</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-secondary d-flex align-items-center p-3 mb-2">
-                                                    <i class="bi-cloud btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">31,999 Subscriber</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-4">
-                                                    <i class="fab fa-dribbble btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">37,999 Subscriber</span>
-                                                </a>
-                                            </div>
+                                            @endforeach
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
                     </div>
                 </div>
             </div>
         </div>
+
+        <style>
+            .article-card {
+                background: #fff;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                transition: 0.3s ease;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .article-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            }
+
+            .article-img {
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+            }
+
+            .article-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* MUHIM: rasmni buzmaydi */
+            }
+
+            .article-body {
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .article-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #222;
+                line-height: 1.4;
+                margin-bottom: 10px;
+                word-break: break-word; /* uzun title tushib ketadi */
+            }
+
+            .article-author {
+                font-size: 14px;
+                color: #777;
+                margin-bottom: 10px;
+            }
+
+            .article-author span {
+                font-weight: 500;
+                color: #333;
+            }
+
+            .article-link {
+                margin-top: auto;
+                font-size: 14px;
+                font-weight: 600;
+                color: #0d6efd;
+                text-decoration: none;
+            }
+
+            .article-link:hover {
+                text-decoration: underline;
+            }
+
+        </style>
         <!-- Most Populer News End -->
 </x-main>

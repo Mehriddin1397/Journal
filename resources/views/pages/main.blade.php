@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="col-7">
                                     <div class="features-content d-flex flex-column">
-                                        <a href="#" class="h6">Eng yaxshi maqola kurik tanlovi nizomi</a>
+                                        <a href="#" class="h6">"Eng yaxshi maqola" ko'rik tanlovi nizomi</a>
 
                                     </div>
                                 </div>

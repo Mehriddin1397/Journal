@@ -62,12 +62,19 @@
 
                             <div class="d-flex align-items-center">
 
+                                @php
+                                    use Carbon\Carbon;
+                                    Carbon::setLocale('uz');
+                                    $now = Carbon::now();
+                                @endphp
+
                                 <div class="d-flex flex-column ms-2" style="width: 150px;">
                                     <span class="text-body">Toshkent,</span>
-                                    <small>Mon. 10 jun 2024</small>
+                                    <small>{{ mb_substr($now->translatedFormat('l'), 0, 2) }}. {{ $now->format('d') }} {{ mb_substr($now->translatedFormat('F'), 0, 3) }} {{ $now->format('Y') }}</small>
                                 </div>
                             </div>
                         </div>
+
                         <button class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
                     </div>
                 </div>
@@ -83,18 +90,32 @@
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Maqolalarni izlash oynasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body d-flex align-items-center">
-                <div class="input-group w-75 mx-auto d-flex">
-                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                </div>
+                <form action="{{ route('search') }}" method="GET" class="w-100">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input
+                            type="search"
+                            name="q"
+                            class="form-control p-3"
+                            placeholder="Maqola nomi yoki avtor nomi"
+                            aria-describedby="search-icon-1"
+                            required
+                        >
+                        <button type="submit" id="search-icon-1" class="input-group-text p-3">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
 </div>
+
 <!-- Modal Search End -->
 
 
@@ -103,14 +124,14 @@
 
 
 <!-- Footer Start -->
-<div class="container-fluid bg-dark footer py-5">
+<div class="container-fluid bg-dark footer py-5 ">
     <div class="container py-5">
         <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
             <div class="row g-4">
                 <div class="col-lg-3">
-                    <a href="#" class="d-flex flex-column flex-wrap">
-                        <p class="text-white mb-0 display-6">Newsers</p>
-                        <small class="text-light" style="letter-spacing: 11px; line-height: 0;">Newspaper</small>
+                    <a href="{{route('main')}}" class="d-flex flex-column flex-wrap">
+                        <p class="text-white mb-0 display-6">IIV MOI</p>
+                        <small class="text-light" style="letter-spacing: 11px; line-height: 0;">Axborotnomasi</small>
                     </a>
                 </div>
             </div>
@@ -118,7 +139,7 @@
         <div class="row g-5">
             <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-1">
-                    <h4 class="mb-4 text-white">Get In Touch</h4>
+                    <h4 class="mb-4 text-white">Biz bilan aloqa</h4>
                     <p class="text-secondary line-h">Address: <span class="text-white">123 Streat, New York</span></p>
                     <p class="text-secondary line-h">Email: <span class="text-white">Example@gmail.com</span></p>
                     <p class="text-secondary line-h">Phone: <span class="text-white">+0123 4567 8910</span></p>
@@ -133,15 +154,24 @@
             <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-2">
                     <div class="d-flex flex-column mb-4">
-                        <h4 class="mb-4 text-white">Recent Posts</h4>
+                        <h4 class="mb-4 text-white">Havolalar</h4>
+{{--                        <a href="#">--}}
+{{--                            <div class="d-flex align-items-center">--}}
+{{--                                <div class="d-flex flex-column ps-4">--}}
+{{--                                    <a href="#" class="h6 text-white">--}}
+{{--                                        Yangi son--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+                    </div>
+                    <div class="d-flex flex-column">
                         <a href="#">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex flex-column ps-4">
-                                    <p class="text-uppercase text-white mb-3">Life Style</p>
                                     <a href="#" class="h6 text-white">
-                                        Get the best speak market, news.
+                                        Yangi son
                                     </a>
-                                    <small class="text-white d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
                                 </div>
                             </div>
                         </a>
@@ -149,13 +179,21 @@
                     <div class="d-flex flex-column">
                         <a href="#">
                             <div class="d-flex align-items-center">
-
                                 <div class="d-flex flex-column ps-4">
-                                    <p class="text-uppercase text-white mb-3">Sports</p>
                                     <a href="#" class="h6 text-white">
-                                        Get the best speak market, news.
+                                        Arxiv
                                     </a>
-                                    <small class="text-white d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <a href="#">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex flex-column ps-4">
+                                    <a href="#" class="h6 text-white">
+                                        Bog'lanish
+                                    </a>
                                 </div>
                             </div>
                         </a>
@@ -164,13 +202,15 @@
             </div>
             <div class="col-lg-6 col-xl-3">
                 <div class="d-flex flex-column text-start footer-item-3">
-                    <h4 class="mb-4 text-white">Categories</h4>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i> Sports</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i> Magazine</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i> Lifestyle</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i> Politician</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i> Technology</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i> Intertainment</a>
+                    <h4 class="mb-4 text-white">Kategoriyalar</h4>
+                    @php
+                    use App\Models\Category;
+                    $categories = Category::all();
+                    @endphp
+                    @foreach($categories as $category)
+                    <a class="btn-link text-white" href="{{ route('category_show', $category->name) }}"><i class="fas fa-angle-right text-white me-2"></i> {{$category->name}}</a>
+                    @endforeach
+
                 </div>
             </div>
             <div class="col-lg-6 col-xl-3">

@@ -9,40 +9,36 @@
 
                         </div>
                         <div class="border-bottom py-3">
-                            <a href="#" class="display-4 text-dark mb-0 link-hover">{{$category->name}}</a>
+                            <a href="#" class="display-4 text-dark mb-0 link-hover">{{$query}} - natijasi:</a>
                         </div>
 
                                 <div class="row g-4 mt-3">
-                                    @foreach($articles as $article)
-                                        <div class="col-md-4">
-                                            <div class="article-card">
-                                                <div class="article-img">
-                                                    <img src="{{ asset('storage/' . $article->photo) }}" alt="Article image">
-                                                </div>
+                                    @if($articles->count())
+                                        @foreach($articles as $article)
+                                            <div class="card mb-3 p-3">
+                                                <h4>{{ $article->title }}</h4>
 
-                                                <div class="article-body">
-                                                    <h5 class="article-title">
-                                                        {{$article->title}}
-                                                    </h5>
+                                                <p>
+                                                    Mualliflar:
+                                                    {{ $article->authors->pluck('name')->join(', ') }}
+                                                </p>
 
-                                                    <p class="article-author">
-                                                        @foreach($article->authors as $author)
-                                                        ✍ Muallif: <span><a href="{{ route('author_show', $author->name) }}">{{$author->name}}</a></span>
-                                                        @endforeach
-                                                    </p>
-                                                    <p class="article-author">
+                                                <p>
+                                                    Jurnal: {{ $article->journalIssue->title ?? 'Noma’lum' }}
+                                                </p>
 
-                                                        Jurnal soni: <span><a href="{{ route('journal_show', $article->journalIssue->title) }}">{{$article->journalIssue->title}}</a></span>
-
-                                                    </p>
-
-                                                    <a href="{{ route('maqola_show', $article->id) }}" class="article-link">
-                                                        Batafsil o‘qish →
-                                                    </a>
-                                                </div>
+                                                <a href="{{ route('maqola_show', $article->id) }}">
+                                                    Batafsil
+                                                </a>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <p>Hech narsa topilmadi 😕</p>
+                                    @endif
+
+                                        <a href="{{ route('main') }}" class="btn btn-danger">
+                                            ⬅ Ortga
+                                        </a>
                                 </div>
 
 

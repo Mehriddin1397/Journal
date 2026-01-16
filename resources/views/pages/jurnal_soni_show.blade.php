@@ -38,7 +38,7 @@
 
                                             </p>
 
-                                            <a href="#" class="article-link">
+                                            <a href="{{ route('maqola_show', $article->id) }}" class="article-link">
                                                 Batafsil o‘qish →
                                             </a>
                                         </div>

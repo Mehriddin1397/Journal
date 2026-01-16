@@ -64,7 +64,7 @@ class ArticleController extends Controller
             'authors' => 'required|array',
             'categories' => 'required|array',
             'journal_issue_id' => 'nullable|exists:journal_issues,id',
-            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:5048',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5048',
         ]);
 
         $data = [

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleRequestController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -11,10 +12,14 @@ Route::get('/new_journal',[\App\Http\Controllers\PageController::class,'new_jour
 Route::post('/article-request', [ArticleRequestController::class, 'store'])->name('article-request.store');
 
 Route::get('/new/{id}', [\App\Http\Controllers\PageController::class, 'new_show'])->name('new.show');
+Route::get('/maqola/{id}', [\App\Http\Controllers\PageController::class, 'article_show'])->name('maqola_show');
 Route::get('/journal/{id}', [\App\Http\Controllers\PageController::class, 'journal_show'])->name('journal.show');
 Route::get('/category/{name}', [\App\Http\Controllers\PageController::class, 'category_show'])->name('category_show');
 Route::get('/author/{name}', [\App\Http\Controllers\PageController::class, 'author_show'])->name('author_show');
 Route::get('/Journal/{name}', [\App\Http\Controllers\PageController::class, 'journals_show'])->name('journal_show');
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+
 
 
 

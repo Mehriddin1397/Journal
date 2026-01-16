@@ -40,14 +40,15 @@
                                         <div class="row g-4">
                                             <div class="col-12">
                                                 @foreach($categories as $category)
-                                                <a href="#" class="w-100 rounded btn btn-{{$category->slug}} d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-facebook-f btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">{{$category->name}}</span>
-                                                </a>
+                                                    <a href="{{ route('category_show', $category->name) }}"
+                                                       class="w-100 rounded btn btn-{{$category->slug}} d-flex align-items-center p-3 mb-2">
+                                                        <i class="fas fa-book d-flex align-items-center justify-content-center bg-light rounded-circle shadow-sm me-3"
+                                                           style="width:45px;height:45px;"></i>
+                                                        <span class="text-white">{{$category->name}}</span>
+                                                    </a>
                                                 @endforeach
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
